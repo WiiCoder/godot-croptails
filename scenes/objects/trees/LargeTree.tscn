@@ -1,0 +1,37 @@
+[gd_scene load_steps=8 format=3 uid="uid://dweuptxf5p0qq"]
+
+[ext_resource type="Texture2D" uid="uid://o2nrs4lxpydc" path="res://assets/game/objects/basic_grass_biom_things.png" id="1_kglcl"]
+[ext_resource type="PackedScene" uid="uid://bylww6pegdkor" path="res://scenes/components/hurt_component.tscn" id="2_a5wq0"]
+[ext_resource type="Script" uid="uid://babdh5jjq1tvw" path="res://scenes/objects/trees/large_tree.gd" id="2_pb64x"]
+[ext_resource type="PackedScene" uid="uid://csdxbnarg0twl" path="res://scenes/components/damage_component.tscn" id="3_pb64x"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_mq52c"]
+atlas = ExtResource("1_kglcl")
+region = Rect2(16, 0, 32, 32)
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_kglcl"]
+radius = 5.0
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_pt36h"]
+size = Vector2(9, 20)
+
+[node name="LargeTree" type="Sprite2D"]
+position = Vector2(0, -14)
+texture = SubResource("AtlasTexture_mq52c")
+script = ExtResource("2_pb64x")
+
+[node name="StaticBody2D" type="StaticBody2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D"]
+position = Vector2(0, 11)
+shape = SubResource("CircleShape2D_kglcl")
+
+[node name="HurtComponent" parent="." instance=ExtResource("2_a5wq0")]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="HurtComponent"]
+position = Vector2(0, 5)
+shape = SubResource("RectangleShape2D_pt36h")
+debug_color = Color(0.8182903, 0.2973421, 0.6982876, 0.41960785)
+
+[node name="DamageComponent" parent="." instance=ExtResource("3_pb64x")]
+max_damage = 5
