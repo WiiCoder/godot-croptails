@@ -1,0 +1,2 @@
+class_name Checnken
+extends CharacterBody2D

@@ -1,0 +1,91 @@
+[gd_scene load_steps=14 format=3 uid="uid://d0ftjdkujb4s4"]
+
+[ext_resource type="Texture2D" uid="uid://dp0ljtdgrqr8k" path="res://assets/game/characters/free_chicken_sprites.png" id="1_gpft5"]
+[ext_resource type="Script" uid="uid://cnly20c37wov7" path="res://scenes/characters/checken/checken.gd" id="1_heaeu"]
+[ext_resource type="Script" uid="uid://cef8w8jp56xto" path="res://scripts/state_machine/node_state_machine.gd" id="2_7ibdd"]
+[ext_resource type="Script" uid="uid://dx33o2f1dkoqa" path="res://scenes/characters/checken/idle_state.gd" id="4_pe5hy"]
+[ext_resource type="Script" uid="uid://dfcqy1ivfqa5" path="res://scenes/characters/checken/walk_state.gd" id="5_dn6py"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_7ibdd"]
+atlas = ExtResource("1_gpft5")
+region = Rect2(0, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_iap6b"]
+atlas = ExtResource("1_gpft5")
+region = Rect2(16, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_7u3xk"]
+atlas = ExtResource("1_gpft5")
+region = Rect2(0, 16, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_heaeu"]
+atlas = ExtResource("1_gpft5")
+region = Rect2(16, 16, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_pe5hy"]
+atlas = ExtResource("1_gpft5")
+region = Rect2(32, 16, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_dn6py"]
+atlas = ExtResource("1_gpft5")
+region = Rect2(48, 16, 16, 16)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_7u3xk"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_7ibdd")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_iap6b")
+}],
+"loop": true,
+"name": &"idle",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_7u3xk")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_heaeu")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_pe5hy")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_dn6py")
+}],
+"loop": true,
+"name": &"walk",
+"speed": 5.0
+}]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_gpft5"]
+radius = 4.0
+
+[node name="Checken" type="CharacterBody2D"]
+script = ExtResource("1_heaeu")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+position = Vector2(0, -6)
+sprite_frames = SubResource("SpriteFrames_7u3xk")
+animation = &"walk"
+autoplay = "idle"
+frame_progress = 0.57943666
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(-1, -4)
+shape = SubResource("CircleShape2D_gpft5")
+
+[node name="StateMachine" type="Node" parent="." node_paths=PackedStringArray("initial_node_state")]
+script = ExtResource("2_7ibdd")
+initial_node_state = NodePath("Idle")
+
+[node name="Idle" type="Node" parent="StateMachine" node_paths=PackedStringArray("character", "animated_sprite_2d")]
+script = ExtResource("4_pe5hy")
+character = NodePath("../..")
+animated_sprite_2d = NodePath("../../AnimatedSprite2D")
+
+[node name="Walk" type="Node" parent="StateMachine"]
+script = ExtResource("5_dn6py")

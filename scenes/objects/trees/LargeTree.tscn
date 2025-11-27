@@ -13,7 +13,7 @@ region = Rect2(16, 0, 32, 32)
 radius = 5.0
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_pt36h"]
-size = Vector2(9, 20)
+size = Vector2(18, 27)
 
 [node name="LargeTree" type="Sprite2D"]
 position = Vector2(0, -14)
@@ -29,7 +29,7 @@ shape = SubResource("CircleShape2D_kglcl")
 [node name="HurtComponent" parent="." instance=ExtResource("2_a5wq0")]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="HurtComponent"]
-position = Vector2(0, 5)
+position = Vector2(0, 1.5)
 shape = SubResource("RectangleShape2D_pt36h")
 debug_color = Color(0.8182903, 0.2973421, 0.6982876, 0.41960785)
 
